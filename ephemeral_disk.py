@@ -235,7 +235,7 @@ w
         else:
             return False
 
-    def get_disk_size(drive):
+    def get_disk_size(self, drive):
 	""" Input: Device ('/dev/xvdb')
 	    Returns: Size of device as int
 	"""
