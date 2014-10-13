@@ -235,6 +235,26 @@ w
         else:
             return False
 
+    def get_disk_size(drive):
+	""" Input: Device ('/dev/xvdb')
+	    Returns: Size of device as int
+	"""
+
+	# Confirm that fdisk binary exists
+        if not self.check_command('/bin/lsblk'):
+            logging.error('/bin/lsblk command does not exist or cannot be accessible')
+            exit(2)
+
+	try:
+	    output = subprocess.check_output(["/bin/lsblk", drive])
+	except CalledProcessError:
+	    print "Missing device %s" % drive
+	    exit(2)
+
+	disk_size = output.splitlines()[1].split()[3]
+
+	return int(disk_size.strip('G'))
+
     def check_mount_point(self, partition):
         """ Check if partition is mounted, example:
 
@@ -262,9 +282,9 @@ w
             mount_points = os.popen("mount 2> /dev/null".format(partition)).read()
             with open('/proc/swaps', 'r') as filename:
                 swap_points = filename.read()
-                if partition in mount_points or partition in swap_points:
+                if partition in mount_points.split() or partition in swap_points.split():
                     return True
-                elif partition[:-1] in mount_points or partition[:-1] in swap_points:
+                elif partition[:-1] in mount_points.split() or partition[:-1] in swap_points.split():
                     return True
                 else:
                     return False
