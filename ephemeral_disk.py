@@ -249,7 +249,7 @@ w
 
 	try:
 	    output = subprocess.check_output(["/bin/lsblk", drive])
-	except CalledProcessError:
+	except subprocess.CalledProcessError:
 	    print "Missing device %s" % drive
 	    exit(2)
 
