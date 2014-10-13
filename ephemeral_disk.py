@@ -13,6 +13,8 @@
 
 import os
 import logging
+import subprocess
+
 from sys import exit
 
 ## Define logging properties globally as will be used over all code.
