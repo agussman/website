@@ -255,7 +255,7 @@ w
 
 	disk_size = output.splitlines()[1].split()[3]
 
-	return int(disk_size.strip('G'))
+	return float(disk_size.strip('G'))
 
     def check_mount_point(self, partition):
         """ Check if partition is mounted, example:
